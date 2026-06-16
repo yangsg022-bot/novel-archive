@@ -187,9 +187,9 @@ document.getElementById("list");
 const filtered=
 novels.filter(n=>{
 
-const genreMatch=
-currentGenre==="전체"
-|| n.genre===currentGenre;
+const genreMatch =
+currentGenre === "전체"
+|| n.genre.includes(currentGenre);
 
 const searchMatch=
 n.title.toLowerCase()
