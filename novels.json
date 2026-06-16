@@ -1,26 +1,7 @@
-
-[
-  {
-    "title":"얼음은 녹음",
-    "author":"L",
-    "genre":"로코","19+"
-    "status":"완결",
-    "link":"https://www.postype.com/@lowness2/post/4731662"
-  },
-
-  {
-    "title":"습관의 무게",
-    "author":"L",
-    "genre":"로코","19+"
-    "status":"완결",
-    "link":"https://www.postype.com/@lowness2/post/5481956"
-  },
-
-  {
-    "title":"올나잇 레플리카",
-    "author":"Chill.ill",
-    "genre":"화류계","불륜"
-    "status":"완결",
-    "link":"https://www.postype.com/@pray-53425/post/5443103"
-  }
-]
+{
+  "title":"작품명",
+  "author":"작가명",
+  "genre":"로코",
+  "status":"완결",
+  "link":"포스타입주소"
+}
