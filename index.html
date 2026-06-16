@@ -5,66 +5,99 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>잼젠 포타 아카이브</title>
   <style>
+    /* 원래 사이트의 깔끔하고 차분한 배경색(#f9f9fb)과 무드를 그대로 유지 */
     body {
-      font-family: 'Pretendard', -apple-system, BlinkMacSystemFont, system-ui, Roboto, sans-serif;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
       background-color: #f9f9fb;
       color: #333;
       margin: 0;
-      padding: 20px;
+      padding: 40px 20px;
       display: flex;
       flex-direction: column;
       align-items: center;
+      min-height: 100vh;
     }
+
+    /* 이모지를 빼고 깔끔하게 폰트로만 타이포그래피 처리한 헤더 */
     header {
       text-align: center;
-      margin-bottom: 30px;
-      margin-top: 20px;
+      margin-bottom: 35px;
     }
     header h1 {
-      font-size: 2.2rem;
+      font-size: 2.3rem;
+      font-weight: 700;
       margin: 0 0 8px 0;
       color: #111;
+      letter-spacing: -0.5px;
     }
     header div {
-      font-size: 1.1rem;
+      font-size: 1rem;
       color: #666;
+      font-weight: 500;
+      letter-spacing: 1px;
     }
+
+    /* 원래 가지고 계시던 깔끔한 검색바 스타일 */
+    .search-container {
+      width: 100%;
+      max-width: 600px;
+      margin-bottom: 25px;
+    }
+    .search-bar {
+      width: 100%;
+      padding: 14px 20px;
+      border: 1px solid #e2e8f0;
+      border-radius: 30px;
+      font-size: 1rem;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.03);
+      outline: none;
+      box-sizing: border-box;
+      background-color: #fff;
+    }
+    .search-bar:focus {
+      border-color: #cbd5e1;
+    }
+
+    /* 사이트 무드에 튀지 않게 녹아드는 단정한 장르 버튼 디자인 */
     .genre-container {
       display: flex;
       gap: 10px;
-      margin-bottom: 25px;
+      margin-bottom: 30px;
       flex-wrap: wrap;
       justify-content: center;
     }
     .genre-btn {
       background-color: #fff;
       color: #555;
-      border: 1px solid #ddd;
-      padding: 8px 16px;
+      border: 1px solid #e2e8f0;
+      padding: 8px 18px;
       border-radius: 20px;
       cursor: pointer;
       font-size: 0.95rem;
       font-weight: 500;
-      transition: all 0.2s ease;
-      box-shadow: 0 2px 4px rgba(0,0,0,0.02);
+      transition: all 0.15s ease;
     }
     .genre-btn:hover {
-      background-color: #f0f0f3;
-      border-color: #ccc;
+      background-color: #f1f5f9;
+      border-color: #cbd5e1;
     }
+    /* 선택된 버튼은 깔끔하게 블랙/다크그레이 톤으로 강조 */
     .genre-btn.active {
-      background-color: #222;
+      background-color: #1e293b;
       color: #fff;
-      border-color: #222;
+      border-color: #1e293b;
     }
+
+    /* 원래 사이트의 깔끔하고 정돈된 화이트 테이블 레이아웃 */
     .table-container {
       width: 100%;
-      max-width: 800px;
+      max-width: 850px;
       background: #fff;
       border-radius: 12px;
-      box-shadow: 0 4px 16px rgba(0,0,0,0.04);
+      box-shadow: 0 4px 16px rgba(0, 0, 0, 0.04);
       overflow: hidden;
       margin-bottom: 50px;
+      border: 1px solid #edf2f7;
     }
     table {
       width: 100%;
@@ -72,147 +105,21 @@
       text-align: left;
     }
     th, td {
-      padding: 14px 20px;
-      border-bottom: 1px solid #eee;
+      padding: 15px 20px;
+      border-bottom: 1px solid #edf2f7;
     }
     th {
       background-color: #fafafa;
       font-weight: 600;
-      color: #555;
+      color: #4a5568;
       font-size: 0.95rem;
     }
     td {
       font-size: 0.95rem;
+      color: #333;
     }
     tr:last-child td {
       border-bottom: none;
     }
-    td a {
-      color: #1a73e8;
-      text-decoration: none;
-      font-weight: 600;
-    }
-    td a:hover {
-      text-decoration: underline;
-    }
-    footer {
-      color: #999;
-      font-size: 0.85rem;
-      margin-bottom: 20px;
-    }
-  </style>
-</head>
-<body>
-
-  <header>
-    <h1>🐰🐾 잼젠 포타 아카이브</h1>
-    <div>JamJen Postype Archive</div>
-  </header>
-
-  <div class="genre-container">
-    <button class="genre-btn active" data-genre="all">전체</button>
-    <button class="genre-btn" data-genre="로코">로코</button>
-    <button class="genre-btn" data-genre="혐관">혐관</button>
-    <button class="genre-btn" data-genre="달달">달달</button>
-    <button class="genre-btn" data-genre="조직물">조직물</button>
-    <button class="genre-btn" data-genre="리맨물">리맨물</button>
-    <button class="genre-btn" data-genre="리얼물">리얼물</button>
-    <button class="genre-btn" data-genre="SF">SF</button>
-    <button class="genre-btn" data-genre="시대물">시대물</button>
-    <button class="genre-btn" data-genre="일상물">일상물</button>
-    <button class="genre-btn" data-genre="센가물">센가물</button>
-    <button class="genre-btn" data-genre="오메가버스">오메가버스</button>
-    <button class="genre-btn" data-genre="청게">청게</button>
-    <button class="genre-btn" data-genre="캠게">캠게</button>
-    <button class="genre-btn" data-genre="키잡">키잡</button>
-    <button class="genre-btn" data-genre="역키잡">역키잡</button>
-  </div>
-
-  <div class="table-container">
-    <table>
-      <thead>
-        <tr>
-          <th>제목</th>
-          <th>글쓴이</th>
-          <th>장르</th>
-          <th>상태</th>
-        </tr>
-      </thead>
-      <tbody id="novel-table-body">
-        <tr><td colspan="4" style="text-align:center; color:#999; padding: 30px;">소설 목록을 불러오는 중입니다...</td></tr>
-      </tbody>
-    </table>
-  </div>
-
-  <footer>
-    ☁️ Made for JamJen Archive
-  </footer>
-
-  <script>
-    
-    let novels = [];
-
-    
-    async function loadNovelData() {
-      try {
-       
-        const response = await fetch('./novels.json');
-        novels = await response.json();
-        
-        // 데이터를 다 불러왔으면 화면에 처음으로 전체 리스트를 보여줍니다.
-        displayNovels(novels);
-      } catch (error) {
-        console.error("데이터를 불러오지 못했습니다:", error);
-        document.getElementById('novel-table-body').innerHTML = 
-          `<tr><td colspan="4" style="text-align:center; color:red; padding: 30px;">데이터를 불러오는 데 실패했습니다.</td></tr>`;
-      }
-    }
-
-    // 2. 화면에 리스트를 그려주는 함수
-    function displayNovels(novelList) {
-      const tableBody = document.getElementById('novel-table-body');
-      tableBody.innerHTML = '';
-
-      if (novelList.length === 0) {
-        tableBody.innerHTML = `<tr><td colspan="4" style="text-align:center; color:#999; padding: 30px;">해당 장르의 작품이 없습니다.</td></tr>`;
-        return;
-      }
-
-      novelList.forEach(novel => {
-        const row = document.createElement('tr');
-        const genreText = novel.genre.join(', ');
-
-        row.innerHTML = `
-          <td><a href="${novel.link}" target="_blank">${novel.title}</a></td>
-          <td>${novel.author}</td>
-          <td>${genreText}</td>
-          <td>${novel.status}</td>
-        `;
-        tableBody.appendChild(row);
-      });
-    }
-
-    // 3. 버튼 클릭 이벤트 및 필터링 기능
-    const buttons = document.querySelectorAll('.genre-btn');
-
-    buttons.forEach(button => {
-      button.addEventListener('click', (e) => {
-        buttons.forEach(btn => btn.classList.remove('active'));
-        e.target.classList.add('active');
-
-        const selectedGenre = e.target.getAttribute('data-genre');
-
-        if (selectedGenre === 'all') {
-          displayNovels(novels);
-        } else {
-          const filteredNovels = novels.filter(novel => novel.genre.includes(selectedGenre));
-          displayNovels(filteredNovels);
-        }
-      });
-    });
-
-    // 4. 페이지가 켜지면 json 데이터를 가져오는 함수를 실행합니다.
-    loadNovelData();
-  </script>
 </body>
 </html>
