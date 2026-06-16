@@ -1,257 +1,257 @@
 <!DOCTYPE html>
 <html lang="ko">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>잼젠 포타 아카이브</title>
-  <style>
-    /* 원래 사이트의 깔끔하고 차분한 배경색(#f9f9fb)과 무드를 그대로 유지 */
-    body {
-      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
-      background-color: #f9f9fb;
-      color: #333;
-      margin: 0;
-      padding: 40px 20px;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      min-height: 100vh;
-    }
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    /* 이모지를 빼고 깔끔하게 폰트로만 타이포그래피 처리한 헤더 */
-    header {
-      text-align: center;
-      margin-bottom: 35px;
-    }
-    header h1 {
-      font-size: 2.3rem;
-      font-weight: 700;
-      margin: 0 0 8px 0;
-      color: #111;
-      letter-spacing: -0.5px;
-    }
-    header div {
-      font-size: 1rem;
-      color: #666;
-      font-weight: 500;
-      letter-spacing: 1px;
-    }
+<title> 🐰🐾잼젠 포타 아카이브</title>
 
-    /* 원래 가지고 계시던 깔끔한 검색바 스타일 */
-    .search-container {
-      width: 100%;
-      max-width: 600px;
-      margin-bottom: 25px;
-    }
-    .search-bar {
-      width: 100%;
-      padding: 14px 20px;
-      border: 1px solid #e2e8f0;
-      border-radius: 30px;
-      font-size: 1rem;
-      box-shadow: 0 2px 8px rgba(0,0,0,0.03);
-      outline: none;
-      box-sizing: border-box;
-      background-color: #fff;
-    }
-    .search-bar:focus {
-      border-color: #cbd5e1;
-    }
+<style>
 
-    /* 사이트 무드에 튀지 않게 녹아드는 단정한 장르 버튼 디자인 */
-    .genre-container {
-      display: flex;
-      gap: 10px;
-      margin-bottom: 30px;
-      flex-wrap: wrap;
-      justify-content: center;
-    }
-    .genre-btn {
-      background-color: #fff;
-      color: #555;
-      border: 1px solid #e2e8f0;
-      padding: 8px 18px;
-      border-radius: 20px;
-      cursor: pointer;
-      font-size: 0.95rem;
-      font-weight: 500;
-      transition: all 0.15s ease;
-    }
-    .genre-btn:hover {
-      background-color: #f1f5f9;
-      border-color: #cbd5e1;
-    }
-    /* 선택된 버튼은 깔끔하게 블랙/다크그레이 톤으로 강조 */
-    .genre-btn.active {
-      background-color: #1e293b;
-      color: #fff;
-      border-color: #1e293b;
-    }
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+}
 
-    /* 원래 사이트의 깔끔하고 정돈된 화이트 테이블 레이아웃 */
-    .table-container {
-      width: 100%;
-      max-width: 850px;
-      background: #fff;
-      border-radius: 12px;
-      box-shadow: 0 4px 16px rgba(0, 0, 0, 0.04);
-      overflow: hidden;
-      margin-bottom: 50px;
-      border: 1px solid #edf2f7;
-    }
-    table {
-      width: 100%;
-      border-collapse: collapse;
-      text-align: left;
-    }
-    th, td {
-      padding: 15px 20px;
-      border-bottom: 1px solid #edf2f7;
-    }
-    th {
-      background-color: #fafafa;
-      font-weight: 600;
-      color: #4a5568;
-      font-size: 0.95rem;
-    }
-    td {
-      font-size: 0.95rem;
-      color: #333;
-    }
-    tr:last-child td {
-      border-bottom: none;
-    }
-    
-    /* 소설 제목 링크 스타일 */
-    td a {
-      color: #2563eb;
-      text-decoration: none;
-      font-weight: 600;
-    }
-    td a:hover {
-      text-decoration: underline;
-    }
+body{
+font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;
+background:#f8f9fb;
+color:#333;
+padding:20px;
+max-width:900px;
+margin:auto;
+}
 
-    /* 원래의 맑은 푸터 느낌 그대로 */
-    footer {
-      color: #999;
-      font-size: 0.85rem;
-      margin-bottom: 20px;
-      letter-spacing: 0.5px;
-    }
-  </style>
+header{
+text-align:center;
+margin-bottom:30px;
+}
+
+h1{
+font-size:2rem;
+margin-bottom:8px;
+}
+
+.subtitle{
+color:#888;
+font-size:0.9rem;
+}
+
+#search{
+width:100%;
+padding:14px;
+border:none;
+border-radius:14px;
+font-size:15px;
+margin-bottom:20px;
+background:white;
+box-shadow:0 2px 10px rgba(0,0,0,0.05);
+}
+
+.genre{
+display:flex;
+flex-wrap:wrap;
+gap:10px;
+margin-bottom:25px;
+}
+
+.genre button{
+border:none;
+padding:10px 14px;
+border-radius:999px;
+background:white;
+cursor:pointer;
+font-size:14px;
+box-shadow:0 2px 8px rgba(0,0,0,0.05);
+transition:.2s;
+}
+
+.genre button:hover{
+transform:translateY(-2px);
+}
+
+.card{
+background:white;
+padding:18px;
+border-radius:18px;
+margin-bottom:12px;
+box-shadow:0 4px 15px rgba(0,0,0,0.05);
+transition:.2s;
+}
+
+.card:hover{
+transform:translateY(-2px);
+}
+
+.title{
+font-size:17px;
+font-weight:700;
+margin-bottom:8px;
+}
+
+.meta{
+font-size:13px;
+color:#888;
+}
+
+.card a{
+text-decoration:none;
+color:inherit;
+display:block;
+}
+
+.empty{
+text-align:center;
+padding:40px;
+color:#999;
+}
+
+footer{
+text-align:center;
+margin-top:30px;
+font-size:12px;
+color:#999;
+}
+
+</style>
 </head>
+
 <body>
 
-  <header>
-    <h1>잼젠 포타 아카이브</h1>
-    <div>JamJen Postype Archive</div>
-  </header>
+<header>
+<h1> 🐰🐾잼젠 포타 아카이브</h1>
+<div class="subtitle">
+JamJen Postype Archive
+</div>
+</header>
 
-  <div class="search-container">
-    <input type="text" id="search-input" class="search-bar" placeholder="작품 제목이나 작가명을 검색해보세요...">
-  </div>
+<input
+type="text"
+id="search"
+placeholder="🔍 작품명 검색">
 
-  <div class="genre-container">
-    <button class="genre-btn active" data-genre="all">전체보기</button>
-    <button class="genre-btn" data-genre="로코">로코</button>
-    <button class="genre-btn" data-genre="조직물">조직물</button>
-    <button class="genre-btn" data-genre="성인">성인</button>
-  </div>
+<div class="genre">
 
-  <div class="table-container">
-    <table>
-      <thead>
-        <tr>
-          <th>제목</th>
-          <th>글쓴이</th>
-          <th>장르</th>
-          <th>상태</th>
-        </tr>
-      </thead>
-      <tbody id="novel-table-body">
-        <tr><td colspan="4" style="text-align:center; color:#718096; padding: 30px;">목록을 불러오는 중입니다...</td></tr>
-      </tbody>
-    </table>
-  </div>
+<button onclick="filterGenre('전체')">
+전체
+</button>
 
-  <footer>
-    Made for JamJen Archive
-  </footer>
+<button onclick="filterGenre('로코')">
+ 로코
+</button>
 
-  <script>
-    let novels = [];
-    let currentGenre = 'all';
+<button onclick="filterGenre('코믹')">
+ 코믹
+</button>
 
-    // 1. 데이터 가져오기
-    async function loadNovelData() {
-      try {
-        const response = await fetch('./novels.json');
-        novels = await response.json();
-        displayNovels(novels);
-      } catch (error) {
-        console.error("데이터 로드 실패:", error);
-        document.getElementById('novel-table-body').innerHTML = 
-          `<tr><td colspan="4" style="text-align:center; color:#e53e3e; padding: 30px;">목록을 불러오지 못했습니다.</td></tr>`;
-      }
-    }
+<button onclick="filterGenre('혐관')">
+ 혐관
+</button>
 
-    // 2. 통합 필터 및 검색 기능
-    function filterAndDisplay() {
-      const searchTerm = document.getElementById('search-input').value.toLowerCase();
+<button onclick="filterGenre('오메가버스')">
+ 오메가버스
+</button>
 
-      const filtered = novels.filter(novel => {
-        const matchGenre = (currentGenre === 'all') || novel.genre.includes(currentGenre);
-        const matchSearch = novel.title.toLowerCase().includes(searchTerm) || 
-                            novel.author.toLowerCase().includes(searchTerm);
-        
-        return matchGenre && matchSearch;
-      });
+</div>
 
-      displayNovels(filtered);
-    }
+<div id="list"></div>
 
-    // 3. 화면 리스트 렌더링
-    function displayNovels(novelList) {
-      const tableBody = document.getElementById('novel-table-body');
-      tableBody.innerHTML = '';
+<footer>
+☁️ Made for JamJen Archive
+</footer>
 
-      if (novelList.length === 0) {
-        tableBody.innerHTML = `<tr><td colspan="4" style="text-align:center; color:#718096; padding: 30px;">결과가 없습니다.</td></tr>`;
-        return;
-      }
+<script>
 
-      novelList.forEach(novel => {
-        const row = document.createElement('tr');
-        const genreText = novel.genre.join(', ');
+let novels=[];
+let currentGenre="전체";
 
-        row.innerHTML = `
-          <td><a href="${novel.link}" target="_blank">${novel.title}</a></td>
-          <td>${novel.author}</td>
-          <td>${genreText}</td>
-          <td>${novel.status}</td>
-        `;
-        tableBody.appendChild(row);
-      });
-    }
+fetch("novels.json")
+.then(res=>res.json())
+.then(data=>{
+novels=data;
+render();
+});
 
-    // 4. 버튼 이벤트 연결
-    const buttons = document.querySelectorAll('.genre-btn');
-    buttons.forEach(button => {
-      button.addEventListener('click', (e) => {
-        buttons.forEach(btn => btn.classList.remove('active'));
-        e.target.classList.add('active');
+function render(){
 
-        currentGenre = e.target.getAttribute('data-genre');
-        filterAndDisplay();
-      });
-    });
+const keyword=
+document
+.getElementById("search")
+.value
+.toLowerCase();
 
-    // 5. 검색창 입력 실시간 필터 연결
-    document.getElementById('search-input').addEventListener('input', filterAndDisplay);
+const list=
+document.getElementById("list");
 
-    // 6. 로드 실행
-    loadNovelData();
-  </script>
+const filtered=
+novels.filter(n=>{
+
+const genreMatch=
+currentGenre==="전체"
+|| n.genre===currentGenre;
+
+const searchMatch=
+n.title.toLowerCase()
+.includes(keyword);
+
+return genreMatch && searchMatch;
+
+});
+
+if(filtered.length===0){
+
+list.innerHTML=
+`<div class="empty">
+검색 결과가 없습니다 🥲
+</div>`;
+
+return;
+}
+
+list.innerHTML="";
+
+filtered.forEach(n=>{
+
+list.innerHTML+=`
+
+<div class="card">
+
+<a href="${n.link}"
+target="_blank">
+
+<div class="title">
+${n.title}
+</div>
+
+<div class="meta">
+✍️ ${n.author}
+&nbsp;&nbsp;·&nbsp;&nbsp;
+📚 ${n.genre}
+&nbsp;&nbsp;·&nbsp;&nbsp;
+${n.status}
+</div>
+
+</a>
+
+</div>
+
+`;
+
+});
+
+}
+
+function filterGenre(g){
+currentGenre=g;
+render();
+}
+
+document
+.getElementById("search")
+.addEventListener("input",render);
+
+</script>
+
 </body>
 </html>
