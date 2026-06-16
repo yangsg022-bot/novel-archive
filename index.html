@@ -84,6 +84,12 @@ transition:.2s;
 transform:translateY(-2px);
 }
 
+.card a{
+text-decoration:none;
+color:inherit;
+display:block;
+}
+
 .title{
 font-size:17px;
 font-weight:700;
@@ -93,12 +99,7 @@ margin-bottom:8px;
 .meta{
 font-size:13px;
 color:#888;
-}
-
-.card a{
-text-decoration:none;
-color:inherit;
-display:block;
+line-height:1.7;
 }
 
 .empty{
@@ -115,12 +116,13 @@ color:#999;
 }
 
 </style>
+
 </head>
 
 <body>
 
 <header>
-<h1> 🐰🐾잼젠 포타 아카이브</h1>
+<h1>🐰🐾 잼젠 포타 아카이브</h1>
 <div class="subtitle">
 JamJen Postype Archive
 </div>
@@ -131,35 +133,9 @@ type="text"
 id="search"
 placeholder="🔍 작품명 검색">
 
-<div class="genre">
-
-<button onclick="filterGenre('전체')">
-전체
-</button>
-
-<button onclick="filterGenre('로코')">
- 로코
-</button>
-
-<button onclick="filterGenre('코믹')">
- 코믹
-</button>
-
-<button onclick="filterGenre('혐관')">
- 혐관
-</button>
-
-<button onclick="filterGenre('오메가버스')">
- 오메가버스
-</button>
-
-<button onclick="filterGenre('조직물')">
- 조직물
-</button> 
-
-<button onclick="filterGenre('성인')">
- 성인
-</button> 
+<div
+class="genre"
+id="genreButtons">
 </div>
 
 <div id="list"></div>
@@ -176,9 +152,55 @@ let currentGenre="전체";
 fetch("novels.json")
 .then(res=>res.json())
 .then(data=>{
+
 novels=data;
+
+createGenreButtons();
+
 render();
+
 });
+
+function createGenreButtons(){
+
+const container=
+document.getElementById(
+"genreButtons"
+);
+
+const genres=new Set();
+
+novels.forEach(n=>{
+
+n.genre.forEach(g=>{
+
+genres.add(g);
+
+});
+
+});
+
+container.innerHTML=
+`
+<button onclick="filterGenre('전체')">
+전체
+</button>
+`;
+
+[...genres]
+.sort()
+.forEach(g=>{
+
+container.innerHTML+=
+`
+<button onclick="filterGenre('${g}')">
+${g}
+</button>
+`;
+
+});
+
+}
 
 function render(){
 
@@ -194,34 +216,43 @@ document.getElementById("list");
 const filtered=
 novels.filter(n=>{
 
-const genreMatch =
-currentGenre === "전체"
-|| n.genre.includes(currentGenre);
+const genreMatch=
+currentGenre==="전체"
+||
+n.genre.includes(currentGenre);
 
 const searchMatch=
-n.title.toLowerCase()
+n.title
+.toLowerCase()
 .includes(keyword);
 
-return genreMatch && searchMatch;
+return (
+genreMatch &&
+searchMatch
+);
 
 });
 
 if(filtered.length===0){
 
 list.innerHTML=
-`<div class="empty">
+`
+<div class="empty">
 검색 결과가 없습니다 🥲
-</div>`;
+</div>
+`;
 
 return;
+
 }
 
 list.innerHTML="";
 
 filtered.forEach(n=>{
 
-list.innerHTML+=`
+list.innerHTML+=
 
+`
 <div class="card">
 
 <a href="${n.link}"
@@ -232,17 +263,22 @@ ${n.title}
 </div>
 
 <div class="meta">
+
 ✍️ ${n.author}
-&nbsp;&nbsp;·&nbsp;&nbsp;
-📚 ${n.genre}
-&nbsp;&nbsp;·&nbsp;&nbsp;
-${n.status}
+
+<br>
+
+📚 ${n.genre.join(" · ")}
+
+<br>
+
+📖 ${n.status}
+
 </div>
 
 </a>
 
 </div>
-
 `;
 
 });
@@ -250,13 +286,19 @@ ${n.status}
 }
 
 function filterGenre(g){
+
 currentGenre=g;
+
 render();
+
 }
 
 document
 .getElementById("search")
-.addEventListener("input",render);
+.addEventListener(
+"input",
+render
+);
 
 </script>
 
