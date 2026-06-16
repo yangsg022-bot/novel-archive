@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>소설 아카이브</title>
+
+<style>
+body{
+font-family:sans-serif;
+margin:0;
+padding:20px;
+background:#f5f5f5;
+}
+
+h1{
+text-align:center;
+}
+
+#search{
+width:100%;
+padding:12px;
+box-sizing:border-box;
+margin-bottom:15px;
+}
+
+.genre{
+display:flex;
+flex-wrap:wrap;
+gap:10px;
+margin-bottom:20px;
+}
+
+.genre button{
+padding:10px;
+border:none;
+border-radius:8px;
+cursor:pointer;
+}
+
+.card{
+background:white;
+padding:15px;
+margin-bottom:10px;
+border-radius:10px;
+}
+
+.card a{
+text-decoration:none;
+color:black;
+font-weight:bold;
+}
+</style>
+</head>
+
+<body>
+
+<h1>📚 소설 아카이브</h1>
+
+<input
+type="text"
+id="search"
+placeholder="작품명 검색">
+
+<div class="genre">
+
+<button onclick="filterGenre('전체')">전체</button>
+<button onclick="filterGenre('로코')">💕 로코</button>
+<button onclick="filterGenre('혐관')">🔥 혐관</button>
+<button onclick="filterGenre('오메가버스')">🐺 오메가버스</button>
+
+</div>
+
+<div id="list"></div>
+
+<script>
+
+let novels=[];
+let currentGenre="전체";
+
+fetch('novels.json')
+.then(res=>res.json())
+.then(data=>{
+novels=data;
+render();
+});
+
+function render(){
+
+const keyword=
+document
+.getElementById('search')
+.value
+.toLowerCase();
+
+const list=
+document.getElementById('list');
+
+list.innerHTML='';
+
+novels
+.filter(n=>{
+
+const genreOk=
+currentGenre==="전체"
+|| n.genre===currentGenre;
+
+const searchOk=
+n.title.toLowerCase()
+.includes(keyword);
+
+return genreOk && searchOk;
+
+})
+
+.forEach(n=>{
+
+list.innerHTML+=`
+<div class="card">
+
+<a href="${n.link}"
+target="_blank">
+
+${n.title}
+
+</a>
+
+<br>
+
+${n.author}
+·
+${n.status}
+
+</div>
+`;
+
+});
+
+}
+
+function filterGenre(g){
+currentGenre=g;
+render();
+}
+
+document
+.getElementById('search')
+.addEventListener('input',render);
+
+</script>
+
+</body>
+</html>
