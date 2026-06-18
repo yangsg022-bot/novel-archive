@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title> 🐰🐾잼젠 포타 아카이브</title>
+<title>☁️🐶 잼젠 포타 아카이브</title>
 
 <style>
 
@@ -25,17 +25,22 @@ margin:auto;
 
 header{
 text-align:center;
-margin-bottom:30px;
+margin-bottom:25px;
 }
 
 h1{
 font-size:2rem;
-margin-bottom:8px;
 }
 
 .subtitle{
 color:#888;
-font-size:0.9rem;
+margin-top:8px;
+}
+
+.stats{
+margin-top:10px;
+font-size:14px;
+color:#666;
 }
 
 #search{
@@ -43,32 +48,35 @@ width:100%;
 padding:14px;
 border:none;
 border-radius:14px;
+margin:20px 0;
 font-size:15px;
-margin-bottom:20px;
-background:white;
-box-shadow:0 2px 10px rgba(0,0,0,0.05);
+box-shadow:0 2px 10px rgba(0,0,0,.05);
 }
 
 .genre{
 display:flex;
 flex-wrap:wrap;
-gap:10px;
-margin-bottom:25px;
+gap:8px;
+margin-bottom:20px;
 }
 
 .genre button{
 border:none;
-padding:10px 14px;
+padding:8px 14px;
 border-radius:999px;
 background:white;
 cursor:pointer;
-font-size:14px;
-box-shadow:0 2px 8px rgba(0,0,0,0.05);
-transition:.2s;
+box-shadow:0 2px 8px rgba(0,0,0,.05);
 }
 
 .genre button:hover{
 transform:translateY(-2px);
+}
+
+.resultCount{
+margin-bottom:15px;
+color:#777;
+font-size:14px;
 }
 
 .card{
@@ -76,12 +84,8 @@ background:white;
 padding:18px;
 border-radius:18px;
 margin-bottom:12px;
-box-shadow:0 4px 15px rgba(0,0,0,0.05);
-transition:.2s;
-}
-
-.card:hover{
-transform:translateY(-2px);
+box-shadow:0 4px 15px rgba(0,0,0,.05);
+position:relative;
 }
 
 .card a{
@@ -94,12 +98,38 @@ display:block;
 font-size:17px;
 font-weight:700;
 margin-bottom:8px;
+padding-right:40px;
 }
 
 .meta{
 font-size:13px;
-color:#888;
-line-height:1.7;
+color:#777;
+line-height:1.8;
+}
+
+.badge{
+display:inline-block;
+padding:4px 8px;
+border-radius:999px;
+font-size:12px;
+margin-right:4px;
+}
+
+.adult{
+background:#ffe1e1;
+}
+
+.complete{
+background:#e3f8e3;
+}
+
+.favorite{
+position:absolute;
+right:16px;
+top:16px;
+cursor:pointer;
+font-size:22px;
+user-select:none;
 }
 
 .empty{
@@ -109,23 +139,27 @@ color:#999;
 }
 
 footer{
-text-align:center;
 margin-top:30px;
+text-align:center;
 font-size:12px;
 color:#999;
 }
 
 </style>
-
 </head>
 
 <body>
 
 <header>
-<h1>🐰🐾 잼젠 포타 아카이브</h1>
+<h1>☁️🐶 잼젠 포타 아카이브</h1>
 <div class="subtitle">
 JamJen Postype Archive
 </div>
+
+<div class="stats" id="totalCount">
+총 0편 수록
+</div>
+
 </header>
 
 <input
@@ -136,6 +170,11 @@ placeholder="🔍 작품명 검색">
 <div
 class="genre"
 id="genreButtons">
+</div>
+
+<div
+class="resultCount"
+id="resultCount">
 </div>
 
 <div id="list"></div>
@@ -149,11 +188,22 @@ id="genreButtons">
 let novels=[];
 let currentGenre="전체";
 
+let favorites=
+JSON.parse(
+localStorage.getItem("favorites")
+|| "[]"
+);
+
 fetch("novels.json")
 .then(res=>res.json())
 .then(data=>{
 
 novels=data;
+
+document.getElementById(
+"totalCount"
+).textContent=
+`총 ${novels.length}편 수록`;
 
 createGenreButtons();
 
@@ -168,33 +218,41 @@ document.getElementById(
 "genreButtons"
 );
 
-const genres=new Set();
+container.innerHTML="";
+
+container.innerHTML+=`
+<button onclick="filterGenre('전체')">
+전체 (${novels.length})
+</button>
+`;
+
+container.innerHTML+=`
+<button onclick="filterGenre('즐겨찾기')">
+⭐ 즐겨찾기 (${favorites.length})
+</button>
+`;
+
+const counts={};
 
 novels.forEach(n=>{
 
 n.genre.forEach(g=>{
 
-genres.add(g);
+if(g==="성인") return;
+
+counts[g]=(counts[g]||0)+1;
 
 });
 
 });
 
-container.innerHTML=
-`
-<button onclick="filterGenre('전체')">
-전체
-</button>
-`;
-
-[...genres]
+Object.keys(counts)
 .sort()
 .forEach(g=>{
 
-container.innerHTML+=
-`
+container.innerHTML+=`
 <button onclick="filterGenre('${g}')">
-${g}
+${g} (${counts[g]})
 </button>
 `;
 
@@ -210,50 +268,71 @@ document
 .value
 .toLowerCase();
 
-const list=
-document.getElementById("list");
-
-const filtered=
+let filtered=
 novels.filter(n=>{
-
-const genreMatch=
-currentGenre==="전체"
-||
-n.genre.includes(currentGenre);
 
 const searchMatch=
 n.title
 .toLowerCase()
 .includes(keyword);
 
-return (
-genreMatch &&
-searchMatch
-);
+if(currentGenre==="전체")
+return searchMatch;
+
+if(currentGenre==="즐겨찾기")
+return favorites.includes(n.title)
+&& searchMatch;
+
+return n.genre.includes(currentGenre)
+&& searchMatch;
 
 });
 
+document.getElementById(
+"resultCount"
+).textContent=
+`검색 결과 ${filtered.length}편`;
+
+const list=
+document.getElementById("list");
+
 if(filtered.length===0){
 
-list.innerHTML=
-`
+list.innerHTML=`
 <div class="empty">
 검색 결과가 없습니다 🥲
 </div>
 `;
 
 return;
-
 }
 
 list.innerHTML="";
 
 filtered.forEach(n=>{
 
-list.innerHTML+=
+const isFavorite=
+favorites.includes(n.title);
 
-`
+const genres=
+n.genre
+.filter(g=>g!=="성인")
+.join(" · ");
+
+const adult=
+n.genre.includes("성인")
+? `<span class="badge adult">🔞 19금</span>`
+: "";
+
+list.innerHTML+=`
+
 <div class="card">
+
+<div
+class="favorite"
+onclick="toggleFavorite('${n.title}')">
+${isFavorite ? "★" : "☆"}
+</div>
 
 <a href="${n.link}"
 target="_blank">
@@ -268,17 +347,22 @@ ${n.title}
 
 <br>
 
-📚 ${n.genre.join(" · ")}
+📚 ${genres}
 
 <br>
 
-📖 ${n.status}
+${adult}
+
+<span class="badge complete">
+🟢 ${n.status}
+</span>
 
 </div>
 
 </a>
 
 </div>
+
 `;
 
 });
@@ -289,6 +373,31 @@ function filterGenre(g){
 
 currentGenre=g;
 
+render();
+
+}
+
+function toggleFavorite(title){
+
+if(favorites.includes(title)){
+
+favorites=
+favorites.filter(
+f=>f!==title
+);
+
+}else{
+
+favorites.push(title);
+
+}
+
+localStorage.setItem(
+"favorites",
+JSON.stringify(favorites)
+);
+
+createGenreButtons();
 render();
 
 }
